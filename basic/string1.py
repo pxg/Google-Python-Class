@@ -56,7 +56,8 @@ def both_ends(s):
 # where all instances of stra have been replaced by strb.
 def fix_start(s):
   # +++your code here+++
-  return
+  s2 = s[1:] # copy of string without first char
+  return s[0] + s2.replace(s[0], '*')
 
 
 # D. MixUp
