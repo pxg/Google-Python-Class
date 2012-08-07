@@ -48,14 +48,8 @@ def front_x(words):
     else:
       otherWords.append(word)
 
-  #return xWords
   # 2. sort the wordsStartX list and words list
-  xWords = sorted(xWords)
-  otherWords = sorted(otherWords)  
-
-  # 3. combine the lists
-  xWords.extend(otherWords)
-  return xWords
+  return sorted(xWords) + sorted(otherWords)
 
 
 
