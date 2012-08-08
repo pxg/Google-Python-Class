@@ -60,25 +60,30 @@ def read_file_dict(filename):
       else:
         dict[word.lower()] += 1
 
-  #print dict
   f.close()
-  #sys.exit(0)
   return dict
 
 def print_words(filename):
   dict = read_file_dict(filename)
-  # sort words_dict by words
-  for key in sorted(dict.keys()):
-    print key, dict[key]
-  return
 
-def print_top():
-  words_dict = read_file_dict(filename)
-  # sort words_dict by how most popular
-  # output top 20 (split dict with words_dict[0:19])
-  return
+  # words is list of words sorted alphabetically
+  words = sorted(dict.keys())
+  for word in words:
+    print word, dict[word]
+  # short hand without variable (less easy to read)
 
-###
+def get_count(word_count_tuple):
+  """Returns the count from a dict word/count tuple  -- used for custom sort."""
+  return word_count_tuple[1]
+
+def print_top(filename):
+  dict = read_file_dict(filename)
+  # custom sort
+  words_tuples_list = sorted(dict.items(), key=get_count, reverse=True)
+
+  # output first 20
+  for words_tuples in words_tuples_list[:20]:
+    print words_tuples[0], words_tuples[1]
 
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
