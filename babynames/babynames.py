@@ -47,7 +47,7 @@ def extract_names(filename):
   html = f.read()
   #print html
   #1 Extract the year and print it "Popularity in [09]4"
-  year = re.search(r'Popularity in (\d\d\d\d)', html)
+  year = re.search(r'Popularity in (\d{4})', html)
   print year.group(1)
 
   #2 Extract the names and rank numbers and just print them
