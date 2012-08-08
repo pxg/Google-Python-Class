@@ -93,20 +93,18 @@ def main():
     dict_of_lists[arg] = extract_names(arg)
 
   if summary == False:
-    #print dict_of_lists
-    #for list in dict_of_lists:
     for file in dict_of_lists:
       text = '\n'.join(dict_of_lists[file]) + '\n'
       print text
 
   else:
     #TODO: write one file per input. Get names from the dict
-    f = open('summary_file.txt', 'w')
-    for list in list_of_lists:
-      text = '\n'.join(list) + '\n'
+    #for list in list_of_lists:
+    for file in dict_of_lists:
+      f = open(file + '.summary', 'w')
+      text = '\n'.join(dict_of_lists[file]) + '\n'
       f.write(text)
-
-    f.close()
+      f.close()
   
 if __name__ == '__main__':
   main()
