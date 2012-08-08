@@ -83,11 +83,7 @@ def main():
     summary = True
     del args[0]
 
-  # +++your code here+++
-  # For each filename, get the names, then either print the text output
-  # or write it to a summary file
-  
-  #TODO: use a dict instead of a list to save the file names to the list
+  #TODO: check that * works
   dict_of_lists = {}
   for arg in args:
     dict_of_lists[arg] = extract_names(arg)
@@ -98,8 +94,6 @@ def main():
       print text
 
   else:
-    #TODO: write one file per input. Get names from the dict
-    #for list in list_of_lists:
     for file in dict_of_lists:
       f = open(file + '.summary', 'w')
       text = '\n'.join(dict_of_lists[file]) + '\n'
