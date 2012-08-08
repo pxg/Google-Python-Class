@@ -40,23 +40,28 @@ def extract_names(filename):
   followed by the name-rank strings in alphabetical order.
   ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
   """
-  #0 read file into a variable
+  # Read file into a variable
   f = open(filename,'r')
   html = f.read()
 
-  #1 Extract the year and print it "Popularity in [09]4"
+  # Extract the year
   year = re.search(r'Popularity in (\d{4})', html)
   print year.group(1)
 
-  #2 Extract the names and rank numbers and just print them
-  #TODO switch to findall
-  matches = re.search(r'<tr align="right"><td>(\d)</td><td>([\w]+)</td><td>([\w]+)</td>', html)
-  print matches.group()
-  print matches.group(1)
-  print matches.group(2)
-  print matches.group(3)
+  # Extract the names and rank numbers
+  dict = {}
+  matches = re.findall(r'<tr align="right"><td>(\d+)</td><td>([\w]+)</td><td>([\w]+)</td>', html)
+  for match in matches:
+    # only add first (smallest number)
+    if match[1] not in dict:
+      dict[match[1]] = match[0] #boys
+    if match[2] not in dict:
+      dict[match[2]] = match[0] #girls
 
-  #3 Get the names data into a dict and print it
+  #print dict
+  #print dict.items()
+  for k, v in dict.items(): print k, '>', v
+
   #4 Build the [year, 'name rank', ... ] list and print it
   #5 Fix main() to use the extract_names list
 
