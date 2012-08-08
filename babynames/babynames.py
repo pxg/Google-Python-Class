@@ -87,29 +87,25 @@ def main():
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
   
-  #TODO: loop years (args) here
-  list_of_lists = []
+  #TODO: use a dict instead of a list to save the file names to the list
+  dict_of_lists = {}
   for arg in args:
-    #print arg
-    list_of_lists.append(extract_names(arg))
-  #sys.exit(0)
+    dict_of_lists[arg] = extract_names(arg)
 
-  #list = extract_names(args[0])
   if summary == False:
-    for list in list_of_lists:
-      text = '\n'.join(list) + '\n'
+    #print dict_of_lists
+    #for list in dict_of_lists:
+    for file in dict_of_lists:
+      text = '\n'.join(dict_of_lists[file]) + '\n'
       print text
-  else:
-    #print 'SUMMARY FILE!'
-    #0 open file for writting
-    f = open('summary_file.txt', 'w')
 
+  else:
+    #TODO: write one file per input. Get names from the dict
+    f = open('summary_file.txt', 'w')
     for list in list_of_lists:
       text = '\n'.join(list) + '\n'
-      #1 write to file
       f.write(text)
 
-    #2 close file here
     f.close()
   
 if __name__ == '__main__':
