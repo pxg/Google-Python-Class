@@ -60,8 +60,10 @@ def mimic_dict(filename):
     else:
       dict[prev].append(word)
     prev = word
+  # add the last word, not dealt with as we use prev
+  #dict[words[-1]] = ['',]
 
-  #print dict
+  #print dict#words[-1]
   #sys.exit(0)
   return dict
 
@@ -69,10 +71,12 @@ def mimic_dict(filename):
 def print_mimic(mimic_dict, word):
   """Given mimic dict and start word, prints 200 random words."""
 
-  for n in range(0, 20):
-    word_list = mimic_dict[word]
-    word = random.choice(word_list)
+  for n in range(0, 200):
     print word,
+    next_list = mimic_dict.get(word) # Returns None if not found
+    if not next_list:
+      next_list = mimic_dict[''] # Fallback to '' if not found
+    word = random.choice(next_list)
   return
 
 
