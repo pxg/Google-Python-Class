@@ -46,7 +46,6 @@ def extract_names(filename):
 
   # Extract the year
   year = re.search(r'Popularity in (\d{4})', html)
-  #print year.group(1)
 
   # Extract the names and rank numbers
   dict = {}
@@ -58,20 +57,12 @@ def extract_names(filename):
     if match[2] not in dict:
       dict[match[2]] = match[0] #girls
 
-  #names = sorted(dict.keys())
-  #for name in names:
-  #  print name, dict[name]
-
   #4 Build the [year, 'name rank', ... ] list and print it
   list = []
   list.append(year.group(1))
   names = sorted(dict.keys())
   for name in names:
     list.append(name + ' ' + dict[name])
-    #print name, dict[name]
-
-  #print list
-  #5 Fix main() to use the extract_names list
 
   return list
 
