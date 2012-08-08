@@ -87,10 +87,30 @@ def main():
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
   
-  #TODO: loop years here
-  output = extract_names(args[0])
-  #TODO: optionally write to a summary file
-  print output
+  #TODO: loop years (args) here
+  list_of_lists = []
+  for arg in args:
+    #print arg
+    list_of_lists.append(extract_names(arg))
+  #sys.exit(0)
+
+  #list = extract_names(args[0])
+  if summary == False:
+    for list in list_of_lists:
+      text = '\n'.join(list) + '\n'
+      print text
+  else:
+    #print 'SUMMARY FILE!'
+    #0 open file for writting
+    f = open('summary_file.txt', 'w')
+
+    for list in list_of_lists:
+      text = '\n'.join(list) + '\n'
+      #1 write to file
+      f.write(text)
+
+    #2 close file here
+    f.close()
   
 if __name__ == '__main__':
   main()
