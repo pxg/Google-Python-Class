@@ -35,6 +35,8 @@ def copy_to(paths, dir):
   """
   given a list of paths, copies those files into the given directory
   """
+  for path in paths:
+    shutil.copy(path, dir)
 
 def zip_to(paths, zippath):
   """
@@ -69,13 +71,11 @@ def main():
     print "error: must specify one or more dirs"
     sys.exit(1)
 
-  # +++your code here+++
-  # Call your functions
-  #TODO: loop dirs
   for dir in args:
     special_paths = get_special_paths(dir)
-    print special_paths
+    #print special_paths
     copy_to(special_paths, todir)
+
     if tozip != '':
       print 'to zip!'
       zip_to(special_paths, tozip)
