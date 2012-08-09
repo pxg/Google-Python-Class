@@ -24,7 +24,21 @@ def read_urls(filename):
   extracting the hostname from the filename itself.
   Screens out duplicate urls and returns the urls sorted into
   increasing order."""
-  # +++your code here+++
+
+  urls = []
+  f = open(filename, 'rU')
+  for line in f:
+    print line,
+    match = re.search(r'GET (\S*puzzle\S*) HTTP', line)
+    if match:
+      #TODO just add filename + url here 
+      #urls.append(line)
+      urls.append('code.google.com' + match.group(1))
+
+  #print urls
+  f.close()
+  #sys.exit(0)
+  return urls
   
 
 def download_images(img_urls, dest_dir):
