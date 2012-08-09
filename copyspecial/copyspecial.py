@@ -36,6 +36,8 @@ def copy_to(paths, dir):
   """
   given a list of paths, copies those files into the given directory
   """
+  #TODO: check if dir exists and create it if it doesn't
+  #TODO: check for duplicate filename and throw error (exception?) if they are. This should be it's own function
   for path in paths:
     shutil.copy(path, dir)
 
@@ -43,7 +45,17 @@ def zip_to(paths, zippath):
   """
   given a list of paths, zip those files up into the given zipfile
   """
+  cmd = "zip -j " + zippath + " "
+  for path in paths:
+    cmd += ' ' + path
+  print "cmd: " + cmd
+  
+  (status, output) = commands.getstatusoutput(cmd)
+  if status:    ## Error case, print the command's output to stderr and exit
+    sys.stderr.write(output)
+    sys.exit(1)
 
+  return output
 
 def main():
   # This basic command line argument parsing code is provided.
