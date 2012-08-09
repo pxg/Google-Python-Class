@@ -26,31 +26,29 @@ def read_urls(filename):
   increasing order."""
   urls = []
   f = open(filename, 'rU')
-  custom_sort = False
 
   for line in f:
     match = re.search(r'GET (\S*puzzle\S*) HTTP', line)
     if match:
       path = match.group(1)
       urls.append('http://code.google.com' + path)
-      # do we need the custom sort?
-      custom_match = re.search(r'\-\w+\-\w+\.jpg', path)
-      if custom_match:
-        print 'REGEX TRUE: ' + path
-        custom_sort = True
   f.close()
 
   #remove duplicates
   urls = list(set(urls))
-
-  # sorting
-  if custom_sort:
-    #print 'CUSTOM SORT!!!!!!!!!!!!!!!!!!!'
-  else:
-    # default sort alphabetically
-    urls = sorted(urls)
-  sys.exit(0)
+  # custom sort
+  urls = sorted(urls, key=custom_sort)
+  #print urls
+  #sys.exit(0)
   return urls
+
+
+def custom_sort(s):
+  match = re.search(r'\-(\w+)\-(\w+)\.jpg', s)
+  if match:
+    return match.group(2)
+  else:
+    return s
 
 
 def download_images(img_urls, dest_dir):
