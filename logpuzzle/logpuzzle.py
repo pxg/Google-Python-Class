@@ -27,16 +27,15 @@ def read_urls(filename):
   urls = []
   f = open(filename, 'rU')
   for line in f:
-    print line,
     match = re.search(r'GET (\S*puzzle\S*) HTTP', line)
     if match:
-      urls.append('code.google.com' + match.group(1))
+      urls.append('http://code.google.com' + match.group(1))
   f.close()
 
   #remove duplicates
   urls = list(set(urls))
   return sorted(urls)
-  
+
 
 def download_images(img_urls, dest_dir):
   """Given the urls already in the correct order, downloads
@@ -46,8 +45,21 @@ def download_images(img_urls, dest_dir):
   with an img tag to show each local image file.
   Creates the directory if necessary.
   """
-  # +++your code here+++
-  
+  if os.path.exists(dest_dir) != True:
+    os.mkdir(dest_dir)
+
+  html = ''
+  n = 0
+  for img_url in img_urls:
+    print 'retrieving: ' + img_url
+    img_name = 'img' + str(n)
+    urllib.urlretrieve(img_url, dest_dir + '/' + img_name)
+    html += '<img src="' + img_name + '">'
+    n += 1
+  f = open(dest_dir + '/index.html', 'w')
+  f.write(html)
+  f.close()
+
 
 def main():
   args = sys.argv[1:]
