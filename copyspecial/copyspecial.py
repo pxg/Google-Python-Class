@@ -73,12 +73,14 @@ def main():
     print "error: must specify one or more dirs"
     sys.exit(1)
 
-  #TODO: just print if no todir add if else
   special_paths = []
   for dir in args:
     special_paths += get_special_paths(dir)
 
-  copy_to(special_paths, todir)
+  if todir == '':
+    print special_paths
+  else:
+    copy_to(special_paths, todir)
 
   if tozip != '':
     zip_to(special_paths, tozip)
