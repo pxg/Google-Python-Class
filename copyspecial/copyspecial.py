@@ -19,15 +19,19 @@ def get_special_paths(dir):
   """
   returns a list of the absolute paths of the special files in the given directory
   """
+  dir = os.path.abspath(dir)
   # Get list of files in the dir
   filenames = os.listdir(dir)
+  #print dir
+  #print filenames
   special_filenames = []
 
   # Loop list and run regular expression matches into new list
   for filename in filenames:
     match = re.search(r'__\w+__', filename)
     if match:
-      special_filenames.append(os.path.abspath(filename))
+      #print os.path.join(dir, filename) # the problem lies here
+      special_filenames.append(os.path.join(dir, filename))
 
   return special_filenames
 
@@ -36,6 +40,7 @@ def copy_to(paths, dir):
   given a list of paths, copies those files into the given directory
   """
   for path in paths:
+    #print path
     shutil.copy(path, dir)
 
 def zip_to(paths, zippath):
@@ -71,14 +76,18 @@ def main():
     print "error: must specify one or more dirs"
     sys.exit(1)
 
+  special_paths = []
   for dir in args:
-    special_paths = get_special_paths(dir)
+    special_paths += get_special_paths(dir)
     #print special_paths
-    copy_to(special_paths, todir)
 
-    if tozip != '':
-      print 'to zip!'
-      zip_to(special_paths, tozip)
+  #print(special_paths)
+  #sys.exit(0)
+  copy_to(special_paths, todir)
+
+  if tozip != '':
+    #print 'to zip!'
+    zip_to(special_paths, tozip)
   
 if __name__ == "__main__":
   main()
