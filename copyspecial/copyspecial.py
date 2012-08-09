@@ -37,9 +37,20 @@ def copy_to(paths, dir):
   given a list of paths, copies those files into the given directory
   """
   #TODO: check if dir exists and create it if it doesn't
-  #TODO: check for duplicate filename and throw error (exception?) if they are. This should be it's own function
+  if os.path.exists(dir) != True:
+    os.mkdir(dir)
+
   for path in paths:
     shutil.copy(path, dir)
+
+def duplicate_filenames_exists(paths):
+  """
+  Check for duplicate filename and throw error if they are. This should be it's own function
+  """
+  # create a comprehension list of just file names
+  filenames = [os.path.basename(path) for path in paths]
+  # return true if they do
+  return len(filenames)!=len(set(filenames))
 
 def zip_to(paths, zippath):
   """
@@ -49,7 +60,7 @@ def zip_to(paths, zippath):
   for path in paths:
     cmd += ' ' + path
   print "cmd: " + cmd
-  
+
   (status, output) = commands.getstatusoutput(cmd)
   if status:    ## Error case, print the command's output to stderr and exit
     sys.stderr.write(output)
@@ -88,6 +99,10 @@ def main():
   special_paths = []
   for dir in args:
     special_paths += get_special_paths(dir)
+
+  if duplicate_filenames_exists(special_paths) != False:
+    print "Duplicate Filenames exist"
+    sys.exit(1)
 
   if todir == '':
     print special_paths
