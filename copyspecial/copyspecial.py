@@ -15,10 +15,31 @@ import commands
 """Copy Special exercise
 """
 
-# +++your code here+++
-# Write functions and modify main() to call them
+def get_special_paths(dir):
+  """
+  returns a list of the absolute paths of the special files in the given directory
+  """
+  # Get list of files in the dir
+  filenames = os.listdir(dir)
+  special_filenames = []
 
+  # Loop list and run regular expression matches into new list
+  for filename in filenames:
+    match = re.search(r'__\w+__', filename)
+    if match:
+      special_filenames.append(os.path.abspath(filename))
 
+  return special_filenames
+
+def copy_to(paths, dir):
+  """
+  given a list of paths, copies those files into the given directory
+  """
+
+def zip_to(paths, zippath):
+  """
+  given a list of paths, zip those files up into the given zipfile
+  """
 
 def main():
   # This basic command line argument parsing code is provided.
@@ -50,6 +71,14 @@ def main():
 
   # +++your code here+++
   # Call your functions
+  #TODO: loop dirs
+  for dir in args:
+    special_paths = get_special_paths(dir)
+    print special_paths
+    copy_to(special_paths, todir)
+    if tozip != '':
+      print 'to zip!'
+      zip_to(special_paths, tozip)
   
 if __name__ == "__main__":
   main()
